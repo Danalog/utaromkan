@@ -13,187 +13,82 @@ You can redistribute it and/or modify it under the terms of
 the GNU General Public License version 2.
 
 Modified by Jason Moiron to work with utf-8 instead of euc-jp
+
+Modified by Tart to be specific to UTAU
 """
 
-__author__  = "Jason Moiron"
-__author_email__  = "jmoiron@jmoiron.net"
-__version__ = "0.02u"
+__author__ = "Tart"
+__author_email__ = "conemusicproductions@gmail.com"
+__version__ = "0.1"
 __revision__ = "1"
 
 import re
 
-def get_kunreitab():
-    """get_kunreitab() -> string
 
-    Reads kana<->kunrei conversion table into string.
+def get_utatab():
+    """get_utatab() -> string
 
-    Table is taken from KAKASI <http://kakasi.namazu.org/> and has been
-    modified.
-
-    """
-    return """
-ぁ	xa	あ	a	ぃ	xi	い	i	ぅ	xu
-う	u	う゛	vu	う゛ぁ	va	う゛ぃ	vi 	う゛ぇ	ve
-う゛ぉ	vo	ぇ	xe	え	e	ぉ	xo	お	o 
-
-か	ka	が	ga	き	ki	きゃ	kya	きゅ	kyu 
-きょ	kyo	ぎ	gi	ぎゃ	gya	ぎゅ	gyu	ぎょ	gyo 
-く	ku	ぐ	gu	け	ke	げ	ge	こ	ko
-ご	go 
-
-さ	sa	ざ	za	し	si	しゃ	sya	しゅ	syu 
-しょ	syo	じ	zi	じゃ	zya	じゅ	zyu	じょ	zyo 
-す	su	ず	zu	せ	se	ぜ	ze	そ	so
-ぞ	zo 
-
-た	ta	だ	da	ち	ti	ちゃ	tya	ちゅ	tyu 
-ちょ	tyo	ぢ	di	ぢゃ	dya	ぢゅ	dyu	ぢょ	dyo 
-
-っ	xtu 
-っう゛	vvu	っう゛ぁ	vva	っう゛ぃ	vvi 
-っう゛ぇ	vve	っう゛ぉ	vvo 
-っか	kka	っが	gga	っき	kki	っきゃ	kkya 
-っきゅ	kkyu	っきょ	kkyo	っぎ	ggi	っぎゃ	ggya 
-っぎゅ	ggyu	っぎょ	ggyo	っく	kku	っぐ	ggu 
-っけ	kke	っげ	gge	っこ	kko	っご	ggo	っさ	ssa 
-っざ	zza	っし	ssi	っしゃ	ssya 
-っしゅ	ssyu	っしょ	ssho 
-っじ	zzi	っじゃ	zzya	っじゅ	zzyu	っじょ	zzyo 
-っす	ssu	っず	zzu	っせ	sse	っぜ	zze	っそ	sso 
-っぞ	zzo	った	tta	っだ	dda	っち	tti 
-っちゃ	ttya	っちゅ	ttyu	っちょ	ttyo	っぢ	ddi 
-っぢゃ	ddya	っぢゅ	ddyu	っぢょ	ddyo	っつ	ttu 
-っづ	ddu	って	tte	っで	dde	っと	tto	っど	ddo 
-っは	hha	っば	bba	っぱ	ppa	っひ	hhi 
-っひゃ	hhya	っひゅ	hhyu	っひょ	hhyo	っび	bbi 
-っびゃ	bbya	っびゅ	bbyu	っびょ	bbyo	っぴ	ppi 
-っぴゃ	ppya	っぴゅ	ppyu	っぴょ	ppyo	っふ	hhu 
-っふぁ	ffa	っふぃ	ffi	っふぇ	ffe	っふぉ	ffo 
-っぶ	bbu	っぷ	ppu	っへ	hhe	っべ	bbe	っぺ    ppe
-っほ	hho	っぼ	bbo	っぽ	ppo	っや	yya	っゆ	yyu 
-っよ	yyo	っら	rra	っり	rri	っりゃ	rrya 
-っりゅ	rryu	っりょ	rryo	っる	rru	っれ	rre 
-っろ	rro 
-
-つ	tu	づ	du	て	te	で	de	と	to
-ど	do 
-
-な	na	に	ni	にゃ	nya	にゅ	nyu	にょ	nyo 
-ぬ	nu	ね	ne	の	no 
-
-は	ha	ば	ba	ぱ	pa	ひ	hi	ひゃ	hya 
-ひゅ	hyu	ひょ	hyo	び	bi	びゃ	bya	びゅ	byu 
-びょ	byo	ぴ	pi	ぴゃ	pya	ぴゅ	pyu	ぴょ	pyo 
-ふ	hu	ふぁ	fa	ふぃ	fi	ふぇ	fe	ふぉ	fo 
-ぶ	bu	ぷ	pu	へ	he	べ	be	ぺ	pe
-ほ	ho	ぼ	bo	ぽ	po 
-
-ま	ma	み	mi	みゃ	mya	みゅ	myu	みょ	myo 
-む	mu	め	me	も	mo 
-
-ゃ	xya	や	ya	ゅ	xyu	ゆ	yu	ょ	xyo
-よ	yo
-
-ら	ra	り	ri	りゃ	rya	りゅ	ryu	りょ	ryo 
-る	ru	れ	re	ろ	ro 
-
-ゎ	xwa	わ	wa	ゐ	wi	ゑ	we
-を	wo	ん	n 
-
-ん     n'
-でぃ   dyi
-ー     -
-ちぇ    tye
-っちぇ	ttye
-じぇ    je
-"""
-
-def get_hepburntab():
-    """get_hepburntab() -> string
-
-    Read kana<->hepburn conversion table into string.
+    Reads kana<->romaji conversion table into string.
 
     Table is taken from KAKASI <http://kakasi.namazu.org/> and has been
     modified.
 
     """
     return """
-ぁ	xa	あ	a	ぃ	xi	い	i	ぅ	xu
-う	u	う゛	vu	う゛ぁ	va	う゛ぃ	vi	う゛ぇ	ve
-う゛ぉ	vo	ぇ	xe	え	e	ぉ	xo	お	o
-	
+あ	a	い	i	う	u	え	e	お	o 
+ヴぁ　va　ヴぃ　vi　ヴ　vu　ヴぇ　ve　ヴぉ vo 
 
-か	ka	が	ga	き	ki	きゃ	kya	きゅ	kyu
-きょ	kyo	ぎ	gi	ぎゃ	gya	ぎゅ	gyu	ぎょ	gyo
-く	ku	ぐ	gu	け	ke	げ	ge	こ	ko
-ご	go	
+か　ka　き　ki　く　ku　け　ke　け　ko　こ
+きゃ　kya　きゅ　kyu　きぇ　kye　きょ kyo
+が　ga　ぎ　gi　ぐ　gu　げ　ge　ご　go
+ぎゃ　gya　ぎゅ　gyu　ぎぇ　gye　ぎょ　gyo
 
-さ	sa	ざ	za	し	shi	しゃ	sha	しゅ	shu
-しょ	sho	じ	ji	じゃ	ja	じゅ	ju	じょ	jo
-す	su	ず	zu	せ	se	ぜ	ze	そ	so
-ぞ	zo	
+さ　sa　すぃ　si　す　su　せ　se　そ so
+すぁ　swa　すぅ　swu　すぇ　swe　すぉ　swo
+ざ　za　ずぃ　zi　ず　zu　ぜ　ze　ぞ　zo
 
-た	ta	だ	da	ち	chi	ちゃ	cha	ちゅ	chu
-ちょ	cho	ぢ	di	ぢゃ	dya	ぢゅ	dyu	ぢょ	dyo
+しゃ　sha　し　shi　しゅ　shu　しぇ　she　しょ　sho
+じゃ　ja　じ　ji　じゅ　ju　じぇ　je　じょ　jo
 
-っ	xtsu	
-っう゛	vvu	っう゛ぁ	vva	っう゛ぃ	vvi	
-っう゛ぇ	vve	っう゛ぉ	vvo	
-っか	kka	っが	gga	っき	kki	っきゃ	kkya	
-っきゅ	kkyu	っきょ	kkyo	っぎ	ggi	っぎゃ	ggya	
-っぎゅ	ggyu	っぎょ	ggyo	っく	kku	っぐ	ggu	
-っけ	kke	っげ	gge	っこ	kko	っご	ggo	っさ	ssa
-っざ	zza	っし	sshi	っしゃ	ssha	
-っしゅ	sshu	っしょ	ssho	
-っじ	jji	っじゃ	jja	っじゅ	jju	っじょ	jjo	
-っす	ssu	っず	zzu	っせ	sse	っぜ	zze	っそ	sso
-っぞ	zzo	った	tta	っだ	dda	っち	cchi	
-っちゃ	ccha	っちゅ	cchu	っちょ	ccho	っぢ	ddi	
-っぢゃ	ddya	っぢゅ	ddyu	っぢょ	ddyo	っつ	ttsu	
-っづ	ddu	って	tte	っで	dde	っと	tto	っど	ddo
-っは	hha	っば	bba	っぱ	ppa	っひ	hhi	
-っひゃ	hhya	っひゅ	hhyu	っひょ	hhyo	っび	bbi	
-っびゃ	bbya	っびゅ	bbyu	っびょ	bbyo	っぴ	ppi	
-っぴゃ	ppya	っぴゅ	ppyu	っぴょ	ppyo	っふ	ffu	
-っふぁ	ffa	っふぃ	ffi	っふぇ	ffe	っふぉ	ffo	
-っぶ	bbu	っぷ	ppu	っへ	hhe	っべ	bbe	っぺ	ppe
-っほ	hho	っぼ	bbo	っぽ	ppo	っや	yya	っゆ	yyu
-っよ	yyo	っら	rra	っり	rri	っりゃ	rrya	
-っりゅ	rryu	っりょ	rryo	っる	rru	っれ	rre	
-っろ	rro	
+た　ta　てぃ　ti　てぅ　tu　て　te　と　to
+てゃ tya　てゅ　tyu　てぇ　tye　てょ　tyo
+だ　da　でぃ　di　でぅ　du　で　de　ど　do
+でゃ　dya　でゅ　dyu　でぇ　dye　でょ　dyo
 
-つ	tsu	づ	du	て	te	で	de	と	to
-ど	do	
+つぁ　tsa　つぃ　tsi　つ　tsu　つぇ　tse　つぉ　tso
+づぁ　dza　づぃ　dzi　づぅ　dzu　づぇ　dze　づぉ dzo
 
-な	na	に	ni	にゃ	nya	にゅ	nyu	にょ	nyo
-ぬ	nu	ね	ne	の	no	
+ちゃ　cha　ち　chi　ちゅ　chu　ちぇ　che　ちょ　cho
+ぢゃ　dja　ぢ　dji　ぢゅ　dju　ぢぇ　dje　ぢょ　djo
 
-は	ha	ば	ba	ぱ	pa	ひ	hi	ひゃ	hya
-ひゅ	hyu	ひょ	hyo	び	bi	びゃ	bya	びゅ	byu
-びょ	byo	ぴ	pi	ぴゃ	pya	ぴゅ	pyu	ぴょ	pyo
-ふ	fu	ふぁ	fa	ふぃ	fi	ふぇ	fe	ふぉ	fo
-ぶ	bu	ぷ	pu	へ	he	べ	be	ぺ	pe
-ほ	ho	ぼ	bo	ぽ	po	
+な　na　に　ni　ぬ　nu　ね　ne　の
+にゃ　nya　にゅ　nyu　にぇ　nye　にょ　nyo
+ま　ma　み　mi　む　mu　め　me　も　mo
+みゃ　mya　みゅ　myu　みぇ　mye　みょ　myo
 
-ま	ma	み	mi	みゃ	mya	みゅ	myu	みょ	myo
-む	mu	め	me	も	mo
+は　ha　ひ　hi　ほぅ　hu　へ　he　ほ　ho
+ひゃ　hya　ひゅ　hyu　ひぇ　hye　ひょ
+ば　ba　び　bi　ぶ　bu　べ　be　ぼ　bo
+びゃ　bya　びゅ　byu　びぇ　bye　びょ　byo
+ぱ　pa　ぴ　pi　ぷ　pu　ぺ　pe　ぽ　po
+ぴゃ　pya　ぴゅ　pyu　ぴぇ　pye　ぴょ　pyo
 
-ゃ	xya	や	ya	ゅ	xyu	ゆ	yu	ょ	xyo
-よ	yo	
+ふぁ　fa　ふぃ　fi　ふ　fu　ふぇ　fe　ふぉ　fo
 
-ら	ra	り	ri	りゃ	rya	りゅ	ryu	りょ	ryo
-る	ru	れ	re	ろ	ro	
+や　ya　いぃ　yi　ゆ　yu　いぇ　ye　よ　yo
 
-ゎ	xwa	わ	wa	ゐ	wi	ゑ	we
-を	wo	ん	n	
+ら　ra　り　ri　る　ru　れ　re　ろ　ro
+りゃ　rya　りゅ　ryu　りぇ　rye　りょ　ryo
 
-ん     n'
-でぃ   dyi
-ー     -
-ちぇ    che
-っちぇ	cche
-じぇ    je
+わ	wa	ゐ	wi	うぅ　wu　ゑ	we	を	wo
+うぇ　we　うぉ　wo　うぃ　wi
+
+_　_
+__　__
+
+ぐぁ　gwa　ぐぃ　gwi　ぐぅ　gwu　ぐぇ　gwe　ぐぉ　gwo
 """
+
 
 def init_rkdict(table):
     """init_rkdict(string) -> dict
@@ -210,10 +105,12 @@ def init_rkdict(table):
         rkdict[kana] = romaji
     return rkdict
 
+
 # Make dictionary of kana->kunrei mappings
 kunrei = init_rkdict(get_kunreitab())
 # Make dictionary of kana->hepburn mappings
 hepburn = init_rkdict(get_hepburntab())
+
 
 def init_all():
     """init_all() -> (dict, dict, dict)
@@ -231,16 +128,18 @@ def init_all():
     hitems = hepburn.iteritems()
     for kan, hrom in hitems:
         romaji_kana[hrom] = kan
-        #kanroms[kan] = hrom
+        # kanroms[kan] = hrom
     # same as hepburn dict
     kana_romaji = hepburn
     kitems = kunrei.iteritems()
     for kan, krom in kitems:
         romaji_kana[krom] = kan
         romaji_romaji[krom] = hepburn[kan]
-    return (romaji_kana, kana_romaji, romaji_romaji, )
+    return (romaji_kana, kana_romaji, romaji_romaji,)
 
-(romkans, kanroms, romroms, ) = init_all()
+
+(romkans, kanroms, romroms,) = init_all()
+
 
 def init_pattern(elements):
     """init_pattern(list) -> string
@@ -251,6 +150,7 @@ def init_pattern(elements):
     items = sorted(elements, key=lambda a: len(a), reverse=True)
     pattern = '|'.join(items)
     return pattern
+
 
 # pattern for matching romaji
 rompat = init_pattern(romkans.keys())
@@ -263,8 +163,9 @@ heppat = init_pattern(hepburn.values())
 
 # consonant regex
 consonants = "ckgszjtdhfpbmyrwxn"
-conpat     = "[%s]" % (consonants, )
-conre      = re.compile(r"^%s$" % (conpat, ))
+conpat = "[%s]" % (consonants,)
+conre = re.compile(r"^%s$" % (conpat,))
+
 
 def isconsonant(char):
     """isconsonant(string) -> bool
@@ -275,10 +176,12 @@ def isconsonant(char):
         return True
     return False
 
+
 # vowel regex
 vowels = "aeiou"
-vowpat = "[%s]" % (vowels, )
-vowre   = re.compile(r"^%s$" % (vowpat, ))
+vowpat = "[%s]" % (vowels,)
+vowre = re.compile(r"^%s$" % (vowpat,))
+
 
 def isvowel(char):
     """isvowel(string) -> bool
@@ -288,6 +191,7 @@ def isvowel(char):
     if len(char) == 1 and char in 'aeiou':
         return True
     return False
+
 
 def consonant2moras(consonant):
     """consonant2moras(string) -> list
@@ -305,7 +209,10 @@ def consonant2moras(consonant):
             results.append(roma)
     return results
 
+
 n_re = re.compile(r"n'(?=[^aiueoyn]|$)")
+
+
 def normalize_double_n(word):
     """normalize_double_n(string) -> string
 
@@ -321,13 +228,16 @@ def normalize_double_n(word):
     >>> normalize_double_n('hannnya')
     "han'nya"
 
-    """ #'
+    """  # '
     word = word.replace("nn", "n'")
     word = n_re.sub("n", word)
     return word
 
+
 # Romaji -> Romaji
-hk_re = re.compile(r"(%s*?)(%s)" % (heppat, kunpat, ))
+hk_re = re.compile(r"(%s*?)(%s)" % (heppat, kunpat,))
+
+
 def romrom(word):
     """romrom(string) -> string
 
@@ -343,9 +253,10 @@ def romrom(word):
     'chiezo'
 
     """
-    #word = normalize_double_n(word)
+    # word = normalize_double_n(word)
     word = hk_re.sub(lambda m: m.groups()[0] + romroms[m.groups()[1]], word)
     return word
+
 
 # EUC-JP kana codes
 CHAR = "(?:[\x00-\x7f]|(?:\x8f[\xa1-\xfe]|[\x8e\xa1-\xfe])[\xa1-\xfe])"
@@ -353,7 +264,9 @@ CHAR = "(?:[\x00-\x7f]|(?:\x8f[\xa1-\xfe]|[\x8e\xa1-\xfe])[\xa1-\xfe])"
 CHAR = "(?:[\x00-\x7f]|(?:\xe3\x82[\x81-\xbf])|(?:\xe3\x83[\x80-\xbc]))"
 
 # Romaji -> Kana
-cr_re = re.compile(r"(%s*?)(%s)" % (CHAR, rompat, ))
+cr_re = re.compile(r"(%s*?)(%s)" % (CHAR, rompat,))
+
+
 def romkan(word):
     """romkan(string) -> string
 
@@ -361,19 +274,22 @@ def romkan(word):
     Kunrei formats.
 
     """
-    #word = normalize_double_n(word)
+    # word = normalize_double_n(word)
     word = cr_re.sub(lambda m: m.groups()[0] + romkans[m.groups()[1]], word)
     return word
 
+
 # Kana -> Romaji
-ck_re = re.compile(r"(%s*?)(%s)" % (CHAR, kanpat, ))
+ck_re = re.compile(r"(%s*?)(%s)" % (CHAR, kanpat,))
+
+
 def kanrom(word):
     """kanrom(string) -> string
 
     Converts hiragana string into Hepburn romaji string.
 
     """
-    #word = normalize_double_n(word)
+    # word = normalize_double_n(word)
     word = ck_re.sub(lambda m: m.groups()[0] + kanroms[m.groups()[1]], word)
     word = n_re.sub("n", word)
     # small katakana letters don't get the 'x' taken out when they are
@@ -383,9 +299,12 @@ def kanrom(word):
 
 
 def unistr(word):
-    try: uw = word.decode('utf-8')
-    except UnicodeEncodeError: uw = unicode(word)
+    try:
+        uw = word.decode('utf-8')
+    except UnicodeEncodeError:
+        uw = unicode(word)
     return uw
+
 
 # Hiragana -> Katakana
 def hirakata(word):
@@ -403,6 +322,7 @@ def hirakata(word):
             s += char
     return s.encode('utf-8')
 
+
 # Katakana -> Hiragana
 def katahira(word):
     """katahira(string) -> string
@@ -419,6 +339,7 @@ def katahira(word):
             s += char
     return s.encode('utf-8')
 
+
 def defullw(word):
     """defullw(string) -> string
 
@@ -433,17 +354,18 @@ def defullw(word):
             s += char
     return s.encode('utf-8')
 
+
 def dekana(word):
     s = u''
     kana_substr = u''
     uniword = unistr(word)
-    i=0
+    i = 0
     while i < len(uniword):
         char = uniword[i]
         if ord(uniword[i]) > 0x3040 and ord(uniword[i]) < 0x30F7:
             while i < len(uniword) and ord(uniword[i]) > 0x3040 and ord(uniword[i]) < 0x30F7:
                 kana_substr += uniword[i]
-                i+=1
+                i += 1
             kana_substr = katahira(kana_substr)
             s += kanrom(kana_substr)
             kana_substr = u''
@@ -451,4 +373,3 @@ def dekana(word):
             s += char
             i += 1
     return s.encode('utf-8')
-
