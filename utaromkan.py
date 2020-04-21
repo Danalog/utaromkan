@@ -8,6 +8,7 @@ import os
 
 root = Tk()
 root.geometry("400x400")
+root.title("utaromkan")
 
 hiraganaVar = tk.IntVar()
 
