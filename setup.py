@@ -1,38 +1,22 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+import setuptools
 
-"""Setup script for utaromkan."""
+with open("README.md", "r") as fh:
+    long_description = fh.read()
 
-from setuptools import setup, find_packages
-import sys, os
-
-version = '0.1'
-
-setup(
-    name='utaromkan',
-    version=version,
-    description="kana <-> romaji conversion for utau",
-    long_description=open('README.rst').read(),
-    # Get strings from http://pypi.python.org/pypi?%3Aaction=list_classifiers
+setuptools.setup(
+    name="utaromkan", # Replace with your own username
+    version="1.0.0",
+    author="Tart",
+    author_email="conemusicproductions@gmail.com",
+    description="hiragana <-> romaji conversion for utau",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    url="https://github.com/Danalog/utaromkan",
+    packages=setuptools.find_packages(),
     classifiers=[
-        "Development Status :: 5 - Production/Stable",
-        "Natural Language :: Japanese",
-        "License :: GNU General Public License (GPL)",
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
     ],
-    keywords='hiragana katakana kana romaji japanese utau \xe6\x97\xa5\xe6\x9c\xac\xe8\xaa\x9e',
-    author='tart',
-    author_email='conemusicproductions@gmail.com',
-    url='http://github.com/Danalog/utaromkan',
-    license='GPL',
-    py_modules = ['utaromkan'],
-    #packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
-    include_package_data=True,
-    zip_safe=False,
-    test_suite="tests",
-    install_requires=[
-      # -*- Extra requirements: -*-
-    ],
-    entry_points="""
-    # -*- Entry points: -*-
-    """,
+    python_requires='>=3.8',
 )
