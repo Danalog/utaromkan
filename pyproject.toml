@@ -1,10 +1,8 @@
-[build-system]
-requires = ["flit_core >=2,<4"]
-build-backend = "flit_core.buildapi"
+[tool.poetry]
+name = "utaromkan"
+version = "1.2.0"
+description = ""
+authors = ["Tart <conemusicproductions@gmail.com>"]
 
-[tool.flit.metadata]
-module = "utaromkan"
-author = "tart"
-author-email = "conemusicproductions@gmail.com"
-home-page = "https://github.com/Danalog/utaromkan"
-classifiers = ["License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)"]
+[tool.poetry.dependencies]
+python = "*"
