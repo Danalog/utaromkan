@@ -1,26 +1,6 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
-"""romkan.py - a Python rewrite of the Perl Romaji<->Kana conversion module.
-
-Romkan Copyright (C) 2000 Satoru Takabayashi <satoru-t@is.aist-nara.ac.jp>
-
-romkan.py Copyright (C) 2006 Eric Nichols <eric-n@is.naist.jp>
-    All rights reserved.
-    This is free software with ABSOLUTELY NO WARRANTY.
-
-You can redistribute it and/or modify it under the terms of 
-the GNU General Public License version 2.
-
-Modified by Jason Moiron to work with utf-8 instead of euc-jp
-
-Modified by Tart to be specific to UTAU
-"""
-
-__author__ = "Tart"
-__author_email__ = "conemusicproductions@gmail.com"
-__version__ = "0.1"
-__revision__ = "1"
 
 import re
 
