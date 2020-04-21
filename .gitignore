@@ -6,4 +6,6 @@ tags
 docs/_build*
 build
 dist
-.idea
+*.idea
+pyproject.toml
+
