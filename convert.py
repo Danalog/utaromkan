@@ -158,7 +158,12 @@ hiraganaDict = {
     "つぃ": "tsi",
     "つ": "tsu",
     "つぇ": "tse",
-    "つぉ": "tso"
+    "つぉ": "tso",
+    "ぱ": "pa",
+    "ぴ": "pi",
+    "ぷ": "pu",
+    "ぺ": "pe",
+    "ぽ": "po"
 }
 
 romajiDict = {
@@ -290,9 +295,16 @@ romajiDict = {
     "tsi": "つぃ",
     "tsu": "つ",
     "tse": "つぇ",
-    "tso": "つぉ"
+    "tso": "つぉ",
+    "pa": "ぱ",
+    "pi": "ぴ",
+    "pu": "ぷ",
+    "pe": "ぺ",
+    "po": "ぽ"
 
 }
+
+# TODO add less common hiragana that is used for extra sounds
 
 
 def init_pattern(elements):
