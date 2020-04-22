@@ -22,12 +22,10 @@ __author_email__ = "conemusicproductions@gmail.com"
 __version__ = "1.2.0"
 __revision__ = "1"
 
-
 import tkinter as tk
 from tkinter import *
 
 from convert import *
-
 
 #  Creates empty window
 root = Tk()
