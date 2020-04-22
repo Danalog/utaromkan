@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "utaromkan"
-version = "1.3.0"
+version = "1.4.0"
 description = "kana <-> romaji conversion for utau"
 authors = ["Tart <conemusicproductions@gmail.com>"]
 readme = "README.md"
