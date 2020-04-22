@@ -26,7 +26,8 @@ __revision__ = "1"
 import tkinter as tk
 from tkinter import *
 
-from convert import *
+from utaromkan import convert as convert
+
 
 #  Creates empty window
 root = Tk()
