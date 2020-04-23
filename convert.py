@@ -296,6 +296,7 @@ romajiDict = {
 }
 
 # TODO add less common hiragana that is used for extra sounds
+# TODO add di to conversion
 
 
 def init_pattern(elements):
